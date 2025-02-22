@@ -19,6 +19,8 @@ public class Medication extends BaseEntity {
     @Column(name = "code")
     private String code;
 
+    private Double weight;
+
     @Column(name = "image")
     private String image;
 
