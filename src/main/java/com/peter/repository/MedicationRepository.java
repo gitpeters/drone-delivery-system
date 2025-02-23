@@ -1,7 +1,11 @@
 package com.peter.repository;
 
 import com.peter.model.Medication;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
-public interface MedicationRepository extends CrudRepository<Medication, Long> {
+import java.util.Optional;
+
+public interface MedicationRepository extends JpaRepository<Medication, Long> {
+    Optional<Medication> findByCode(String code);
 }

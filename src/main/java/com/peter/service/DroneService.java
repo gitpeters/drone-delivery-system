@@ -1,6 +1,6 @@
 package com.peter.service;
 
-import com.peter.helper.DroneHelper;
+import com.peter.helper.DroneMapper;
 import com.peter.repository.DroneRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DroneService {
     private final DroneRepository droneRepository;
-    private final DroneHelper droneHelper;
+    private final DroneMapper droneHelper;
 }
