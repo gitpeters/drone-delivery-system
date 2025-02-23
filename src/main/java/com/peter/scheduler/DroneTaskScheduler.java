@@ -2,8 +2,8 @@ package com.peter.scheduler;
 
 import com.peter.model.AuditLog;
 import com.peter.model.Drone;
+import com.peter.repository.AuditLogRepository;
 import com.peter.repository.DroneRepository;
-import com.peter.repository.MedicationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,8 +15,9 @@ import java.util.List;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class TaskScheduler {
+public class DroneTaskScheduler {
     private final DroneRepository droneRepository;
+    private final AuditLogRepository auditLogRepository;
 
     @Scheduled(cron = "0 */2 * * * *") // Run task every 2 minutes
     public void scheduleTask() {
@@ -30,7 +31,7 @@ public class TaskScheduler {
                 auditLog.setDroneSerialNumber(drone.getSerialNumber());
                 auditLog.setBatteryLevel(drone.getBatteryCapacity());
                 auditLog.setTimestamp(LocalDateTime.now());
-
+                auditLogRepository.save(auditLog);
                 if (drone.getBatteryCapacity() < 25) {
                     log.warn("Drone {} has low battery: {}", drone.getSerialNumber(), drone.getBatteryCapacity());
                 }

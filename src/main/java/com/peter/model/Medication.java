@@ -11,11 +11,9 @@ import lombok.EqualsAndHashCode;
 @Data
 public class Medication extends BaseEntity {
 
-    @Pattern(regexp = "^[A-Za-z0-9-_]+$")
     @Column(name = "name")
     private String name;
 
-    @Pattern(regexp = "^[A-Z0-9_]+$")
     @Column(name = "code")
     private String code;
 

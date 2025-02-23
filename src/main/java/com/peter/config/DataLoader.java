@@ -2,6 +2,7 @@ package com.peter.config;
 
 import com.peter.enums.DroneModel;
 import com.peter.enums.DroneState;
+import com.peter.exceptions.MedicationException;
 import com.peter.model.Drone;
 import com.peter.model.Medication;
 import com.peter.repository.DroneRepository;
@@ -11,10 +12,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.net.URL;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Configuration
@@ -54,8 +57,7 @@ public class DataLoader {
                     medication.setName(medicationNames[i % medicationNames.length]);
                     medication.setWeight(this.generateWeight());
                     medication.setCode("MED_" + (i + 1));
-                    String imagePath = getImagePath("MED_" + (i + 1) + ".jpg");
-                    medication.setImage(imagePath);
+                    medication.setImage("/images/medications/MED_" + (i + 1) + ".jpg");
                     medicationList.add(medication);
                 }
 
@@ -65,12 +67,6 @@ public class DataLoader {
             }
 
         };
-    }
-
-    private String getImagePath(String fileName) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL resource = classLoader.getResource("images/medications/" + fileName);
-        return Objects.nonNull(resource) ? resource.toString() : null;
     }
 
     private double generateWeight() {

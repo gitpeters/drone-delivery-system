@@ -18,13 +18,21 @@ import java.util.UUID;
 @Data
 public class DroneDTO {
     private UUID id;
-    @Size(min = 1, max = 50)
+
+    @Size(min = 1, max = 50,
+            message = "Serial number must be between 1 and 50 characters long.")
     private String serialNumber;
-    @Max(500)
+
+    @Max(value = 500,
+            message = "Weight limit cannot exceed 500 grams.")
     private Double weightLimit;
-    @Max(100)
-    @Min(0)
+
+    @Min(value = 0,
+            message = "Battery capacity cannot be less than 0%.")
+    @Max(value = 100,
+            message = "Battery capacity cannot exceed 100%.")
     private Integer batteryCapacity;
+
     private DroneState state;
     private DroneModel model;
 }
