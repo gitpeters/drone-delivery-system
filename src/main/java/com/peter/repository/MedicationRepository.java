@@ -11,4 +11,7 @@ public interface MedicationRepository extends JpaRepository<Medication, Long> {
 
     List<Medication> findAllByOrderByCreatedAtDesc();
 
+    List<Medication> findAllByCodeIn(List<String> medicationCodes);
+
+    List<Medication> findAllByDroneSerialNumber(String serialNumber);
 }
