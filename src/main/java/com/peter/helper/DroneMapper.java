@@ -1,7 +1,10 @@
 package com.peter.helper;
 
 import com.peter.dto.DroneDTO;
+import com.peter.enums.DroneModel;
+import com.peter.enums.DroneState;
 import com.peter.model.Drone;
+import com.peter.util.ValidationUtil;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,8 +17,8 @@ public class DroneMapper {
         return DroneDTO.builder()
                 .id(drone.getPublicId())
                 .serialNumber(drone.getSerialNumber())
-                .model(drone.getModel())
-                .state(drone.getState())
+                .model(drone.getModel().name())
+                .state(drone.getState().name())
                 .weightLimit(drone.getWeightLimit())
                 .batteryCapacity(drone.getBatteryCapacity())
                 .build();
@@ -27,8 +30,8 @@ public class DroneMapper {
         }
         Drone drone = new Drone();
         drone.setSerialNumber(droneDTO.getSerialNumber());
-        drone.setModel(droneDTO.getModel());
-        drone.setState(droneDTO.getState());
+        drone.setModel(DroneModel.valueOf(droneDTO.getModel().toUpperCase()));
+        drone.setState(DroneState.valueOf(droneDTO.getState().toUpperCase()));
         drone.setWeightLimit(droneDTO.getWeightLimit());
         drone.setBatteryCapacity(droneDTO.getBatteryCapacity());
         return drone;

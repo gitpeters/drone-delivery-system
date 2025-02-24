@@ -3,7 +3,10 @@ package com.peter.rest.v1;
 import com.peter.dto.DroneDTO;
 import com.peter.dto.MedicationDTO;
 import com.peter.dto.MedicationLoadRequest;
+import com.peter.enums.DroneModel;
+import com.peter.enums.DroneState;
 import com.peter.service.DroneService;
+import com.peter.util.ValidationUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.peter.util.ValidationUtil.validateEnum;
+
 @RestController
 @RequestMapping("/api/v1/drones")
 @RequiredArgsConstructor
@@ -19,7 +24,13 @@ public class DispatchController {
     private final DroneService droneService;
 
     @PostMapping("/register")
-    public ResponseEntity<DroneDTO> register(@RequestBody @Valid DroneDTO droneDTO){
+    public ResponseEntity<?> register(@RequestBody @Valid DroneDTO droneDTO){
+        // Validate enums
+        ResponseEntity<?> stateValidation = validateEnum(droneDTO.getState(), DroneState.class, "drone state");
+        if (stateValidation != null) return stateValidation;
+
+        ResponseEntity<?> modelValidation = validateEnum(droneDTO.getModel(), DroneModel.class, "drone model");
+        if (modelValidation != null) return modelValidation;
         DroneDTO registeredDrone = droneService.registerDrone(droneDTO);
         return new ResponseEntity<>(registeredDrone, HttpStatus.CREATED);
     }

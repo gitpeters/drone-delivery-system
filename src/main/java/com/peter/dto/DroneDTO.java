@@ -4,6 +4,7 @@ import com.peter.enums.DroneModel;
 import com.peter.enums.DroneState;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,8 +24,8 @@ public class DroneDTO {
             message = "Serial number must be between 1 and 50 characters long.")
     private String serialNumber;
 
-    @Max(value = 500,
-            message = "Weight limit cannot exceed 500 grams.")
+    @NotNull(message = "Weight limit is required.")
+    @Max(value = 500, message = "Weight limit cannot exceed 500 grams.")
     private Double weightLimit;
 
     @Min(value = 0,
@@ -33,6 +34,9 @@ public class DroneDTO {
             message = "Battery capacity cannot exceed 100%.")
     private Integer batteryCapacity;
 
-    private DroneState state;
-    private DroneModel model;
+    @NotNull(message = "Drone state is required.")
+    private String state;
+
+    @NotNull(message = "Drone model is required.")
+    private String model;
 }

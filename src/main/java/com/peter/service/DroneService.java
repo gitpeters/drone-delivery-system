@@ -3,6 +3,7 @@ package com.peter.service;
 import com.peter.dto.DroneDTO;
 import com.peter.dto.MedicationDTO;
 import com.peter.dto.MedicationLoadRequest;
+import com.peter.enums.DroneModel;
 import com.peter.enums.DroneState;
 import com.peter.exceptions.DroneException;
 import com.peter.helper.DroneMapper;
@@ -11,6 +12,7 @@ import com.peter.model.Drone;
 import com.peter.model.Medication;
 import com.peter.repository.DroneRepository;
 import com.peter.repository.MedicationRepository;
+import com.peter.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class DroneService {
     @Transactional
     public DroneDTO registerDrone(DroneDTO droneDTO) {
         log.info("Registering new drone with serial number: {} ", droneDTO.getSerialNumber());
+        if(droneRepository.findBySerialNumber(droneDTO.getSerialNumber()).isPresent()) {
+            throw new DroneException("Drone with serial number "+droneDTO.getSerialNumber()+" already exists.", 409);
+        }
         Drone drone = droneMapper.toEntity(droneDTO);
         try{
             droneRepository.save(drone);
