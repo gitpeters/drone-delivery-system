@@ -1,73 +1,83 @@
-﻿# Drone Delivery System
+# Drone Delivery System
 
-This project is part of Blusalt interview exercise.
-
----
+A RESTful API for managing autonomous drone deliveries of medications.
 
 ## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [API Documentation](#api-documentation)
+- [Database](#database)
 
-1. [Introduction](#introduction)
-2. [Features](#features)
-3. [Setup Instructions](#setup-instructions)
-4. [Usage](#usage)
+## Overview
 
----
-
-## Introduction
-
-This API is built with **SpringBoot** to provide drone dispatch delivery services to users. The API uses:
-
-- **SpringBoot** for REST.
-- **H2** as the in-memory database.
-- **JPA** as the ORM to manage database interactions
-
----
+This system enables the management of a drone fleet for delivering medications to locations that are difficult to access by conventional means. Built as part of the Blusalt interview exercise, it provides a comprehensive set of APIs for drone registration, medication management, and delivery logistics.
 
 ## Features
 
-- Register new drone.
-- Load drone with medications.
-- Check drone availability.
-- Check drone battery level.
-- Retrieve loaded medications.
-- Manage Medications (create, retrieve, update, delete)
+- **Drone Management**
+  - Register new drones with specific capabilities
+  - Monitor drone battery levels
+  - Check drone availability for delivery
 
----
+- **Medication Delivery**
+  - Load medications onto available drones
+  - Track medication delivery status (future update)
+  - Retrieve loaded medication details
 
-## Setup Instructions
+- **Fleet Monitoring**
+  - View all registered drones
+  - Check battery levels across the fleet
+  - Monitor delivery operations (future update)
+
+## Tech Stack
+
+- **Backend**: Spring Boot
+- **Database**: H2 (in-memory)
+- **ORM**: Spring Data JPA
+- **Build Tool**: Maven
+- **Java Version**: 17+
+
+## Getting Started
 
 ### Prerequisites
 
-1. Have java 17 and above installed.
-2. Access H2 console at (h2 console)[http://localhost:9000/h2-console]
-   use the following credentials:
-   ```bash
-   Driver Class: org.h2.Driver
-   JDBC URL: jdbc:h2:mem:droneDb
-   username: sa
-   password: <leave blank>
+- Java 17 or higher installed
+- Maven installed
 
-### Installation Steps
+### Installation and Setup
 
-1. **Clone the repository**:
+1. **Clone the repository**
    ```bash
-   git https://github.com/gitpeters/drone-delivery-system.git
-   cd <DroneDeliverySystem>
+   git clone https://github.com/gitpeters/drone-delivery-system.git
    ```
 
-4. **Start the application**:
-   ```maven
-       mvn spring-boot:run
+2. **Run the application**
+   ```bash
+   mvn spring-boot:run
    ```
 
-## Usage
+3. **Access the API**
+   ```
+   Base URL: http://localhost:9000/api/v1
+   ```
 
-### Test the API
+### Database Access
 
-You can the API collection (here) [https://documenter.getpostman.com/view/23480248/2sAYdctYuh] to interact with the API
+Access the H2 console for database inspection:
+- URL: http://localhost:9000/h2-console
+- Driver Class: org.h2.Driver
+- JDBC URL: jdbc:h2:mem:droneDb
+- Username: sa
+- Password: (leave blank)
 
-### Base URL
+## API Documentation
 
-```bash
-       http://localhost:9000/api/v1
-```
+Complete API documentation is available on Postman:
+[API Documentation](https://documenter.getpostman.com/view/23480248/2sAYdctYuh)
+
+Key endpoints include:
+- `/drones` - Drone registration and management
+- `/medications` - Medication CRUD operations
+- `/drones/{serialNumber}/medications` - Loading medications onto drones
